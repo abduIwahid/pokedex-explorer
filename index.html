@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokédex Explorer — PokéAPI</title>
+<meta name="description" content="Browse, search and filter Pokémon with live data from PokéAPI. Built with vanilla JavaScript — batching, caching and evolution chains included.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <div>
+      <h1>Pokédex Explorer</h1>
+      <p class="tagline">Every Pokémon, one clean interface. Data from PokéAPI.</p>
+    </div>
+  </div>
+</header>
+
+<div id="offline-banner" class="offline-banner" role="alert" hidden>
+  You are offline. Cached Pokémon still work; new pages and searches need a connection.
+</div>
+
+<main class="wrap">
+  <section class="controls" aria-label="Search and filters">
+    <div class="search-row">
+      <label for="search-input">Search by name</label>
+      <input id="search-input" type="search" placeholder="e.g. pikachu, charizard, mr-mime" autocomplete="off">
+      <button id="clear-search" class="btn btn-secondary" type="button" hidden>Clear</button>
+    </div>
+    <div class="filter-block">
+      <span class="filter-label" id="type-filter-label">Filter by type</span>
+      <div id="type-filters" class="chip-row" role="group" aria-labelledby="type-filter-label"></div>
+      <p id="filter-note" class="filter-note" role="status"></p>
+    </div>
+  </section>
+
+  <section aria-label="Pokémon list">
+    <div id="status-region" class="status-region" role="status" aria-live="polite"></div>
+    <div id="grid" class="grid"></div>
+    <div id="empty-state" class="state-box" hidden>
+      <h2>No Pokémon found</h2>
+      <p id="empty-text">Nothing matches that search. Check the spelling — names are lowercase and hyphenated, e.g. <code>mr-mime</code>.</p>
+      <button id="empty-reset" class="btn" type="button">Reset search and filters</button>
+    </div>
+    <div id="error-state" class="state-box state-error" hidden>
+      <h2>Something went wrong</h2>
+      <p id="error-text">The request failed.</p>
+      <button id="error-retry" class="btn" type="button">Try again</button>
+    </div>
+  </section>
+
+  <nav class="pagination" aria-label="Pages">
+    <button id="prev-page" class="btn btn-secondary" type="button">Previous</button>
+    <span id="page-indicator" class="page-indicator">Page 1</span>
+    <button id="next-page" class="btn btn-secondary" type="button">Next</button>
+  </nav>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Data from <a href="https://pokeapi.co" target="_blank" rel="noopener">PokéAPI</a>. Responses are cached locally in line with PokéAPI's fair-use policy. Pokémon and character names are trademarks of Nintendo.</p>
+  </div>
+</footer>
+
+<div id="detail-overlay" class="overlay" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="detail-name">
+    <button id="detail-close" class="btn btn-secondary modal-close" type="button">Close</button>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
