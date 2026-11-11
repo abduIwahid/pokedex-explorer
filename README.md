@@ -1,5 +1,8 @@
 # Pokédex Explorer
 
+> Built by [Abdul Wahid](https://github.com/abduIwahid) — BS Artificial Intelligence student at COMSATS University Islamabad (Attock Campus). One of a series of dependency-free apps I built against free public APIs to practise real-world API constraints: rate limits, caching, and payload normalisation. More at [abdulwahid.me](https://www.abdulwahid.me).
+
+
 A fast, dependency-free Pokédex that browses, searches and filters all 1,300+ Pokémon with live data from PokéAPI — and demonstrates the engineering habits that separate a portfolio project from a tutorial follow-along: batching, caching, request cancellation and a real data-mapper layer.
 
 **Live demo:** _TBD — deploy pending owner decision (GitHub Pages or Vercel static)._
@@ -11,6 +14,7 @@ Run it locally: open `index.html` in a browser, or `python3 -m http.server` in t
 - **Search by name** — debounced (300 ms) with `AbortController` cancellation, so fast typing never renders a stale result. Unknown names get a proper empty state that explains PokéAPI's lowercase-hyphenated naming (`mr-mime`, `ho-oh`).
 - **Type filter chips** — selecting a type fetches the type endpoint once, caches its member list, and intersects it with the Pokédex ordering (set intersection) before paginating.
 - **Detail view** — base stats as bars, height/weight converted to metric, abilities (hidden ones marked), and the full evolution chain rendered with sprites.
+- **Seen collection** — every Pokémon whose detail view you open is marked with a "Seen" badge and counted in the header ("Seen N of 1,300+"), persisted in localStorage — the app keeps your Pokédex progress between visits.
 - **Full UI states** — loading skeletons, error state with retry, empty state with reset, and an offline banner.
 
 ## Engineering decisions

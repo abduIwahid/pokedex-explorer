@@ -128,3 +128,11 @@ a { color: var(--accent-dark); }
   .detail-grid { grid-template-columns: 1fr; }
   .modal { padding: 18px 14px; }
 }
+
+.seen-count { font-weight: 700; background: var(--accent-soft); color: var(--accent-dark); padding: 6px 14px; border-radius: 999px; margin: 0; white-space: nowrap; }
+.seen-badge { display: inline-block; margin-top: 8px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; background: var(--accent); color: #FFFFFF; padding: 2px 9px; border-radius: 999px; }
+.seen-badge[hidden] { display: none; }
+.about-panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; margin: 26px auto 0; box-sizing: border-box; width: calc(100% - 32px); box-shadow: var(--shadow); }
+.about-panel h2 { margin-top: 0; }
+.about-sign { color: var(--text-muted); margin-bottom: 0; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }

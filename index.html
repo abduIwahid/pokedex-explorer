@@ -14,6 +14,7 @@
       <h1>Pokédex Explorer</h1>
       <p class="tagline">Every Pokémon, one clean interface. Data from PokéAPI.</p>
     </div>
+    <p class="seen-count" id="seen-count" role="status">Seen 0</p>
   </div>
 </header>
 
@@ -56,6 +57,13 @@
     <button id="next-page" class="btn btn-secondary" type="button">Next</button>
   </nav>
 </main>
+
+<section class="wrap about-panel" aria-label="About this project">
+  <h2>About this project</h2>
+  <p>PokéAPI looks like the friendliest API on the internet — free, no key, everything public. The catch only shows up when you build against it: the list endpoint gives you names and URLs, so a single page of cards needs 24 separate detail calls, and a search box that fires one request per keystroke will happily race itself. I built this Pokédex to practise exactly that discipline — chunked batching instead of request waterfalls, cancelling stale searches, and caching immutable data the way PokéAPI's fair-use policy asks. The "Seen" counter is my favourite small touch: the app remembers which Pokémon you have actually opened, like a real Pokédex.</p>
+  <p>Part of a series of small, dependency-free apps I built against free public APIs to practise working within real rate limits and payload shapes.</p>
+  <p class="about-sign">— <a href="https://github.com/abduIwahid" target="_blank" rel="noopener">Abdul Wahid</a> · BS Artificial Intelligence, COMSATS University Islamabad (Attock Campus) · <a href="https://www.abdulwahid.me" target="_blank" rel="noopener">abdulwahid.me</a></p>
+</section>
 
 <footer class="site-footer">
   <div class="wrap">
