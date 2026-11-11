@@ -7,3 +7,4 @@
 **Verified:** app.js syntax (node --check); mapper fields against live PokéAPI (list, detail, type, species/evolution).
 
 **Pending:** GitHub repo creation + deploy (owner decision: GitHub Pages vs Vercel); README demo GIF after deploy; Phase 2 level-ups (favourites, radar chart).
+- 2026-11-10 (later): Seen collection + first-person About shipped. Next: hosting choice (Pages vs Vercel) still open; favourites remain a Phase 2 candidate alongside the stat radar.

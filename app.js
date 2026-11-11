@@ -9,6 +9,7 @@ const API = 'https://pokeapi.co/api/v2';
 const PAGE_SIZE = 24;
 const BATCH = 12; // Promise.all chunk size for detail fetches
 const LS_DETAIL = 'pokedex:detail:';
+const LS_SEEN = 'pokedex:seen';
 const LS_TYPE = 'pokedex:type:';
 
 const TYPE_LIST = ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting',
@@ -19,6 +20,7 @@ const state = {
   total: 0,
   listCache: new Map(),   // page -> [{id, name}]
   detailCache: new Map(), // id -> mapped pokemon
+  seen: new Set(), // ids whose detail view has been opened (persisted)
   activeType: null,
   typeMembers: null,      // Set of ids for the active type
   mode: 'browse',         // 'browse' | 'search'
@@ -154,7 +156,29 @@ function cardHtml(p) {
   return '<img src="' + p.artwork + '" alt="' + esc(p.name) + ' artwork" loading="lazy">' +
     '<span class="pname">' + esc(p.name) + '</span>' +
     '<span class="pid">#' + p.id + '</span>' +
-    '<span class="type-row">' + chips + '</span>';
+    '<span class="type-row">' + chips + '</span>' +
+    '<span class="seen-badge" data-seen-badge="' + p.id + '"' + (state.seen.has(p.id) ? '' : ' hidden') + '>Seen</span>';
+}
+function loadSeen() {
+  try {
+    const raw = localStorage.getItem(LS_SEEN);
+    if (raw) state.seen = new Set(JSON.parse(raw));
+  } catch (e) { /* ignore */ }
+  renderSeenCount();
+}
+function markSeen(id) {
+  if (state.seen.has(id)) return;
+  state.seen.add(id);
+  try { localStorage.setItem(LS_SEEN, JSON.stringify(Array.from(state.seen))); } catch (e) { /* quota — non-fatal */ }
+  renderSeenCount();
+  el.grid.querySelectorAll('[data-seen-badge="' + id + '"]').forEach((b) => { b.hidden = false; });
+}
+function renderSeenCount() {
+  const elc = document.getElementById('seen-count');
+  if (!elc) return;
+  elc.textContent = state.total
+    ? 'Seen ' + state.seen.size + ' of ' + state.total
+    : 'Seen ' + state.seen.size;
 }
 function renderCards(list) {
   hideStates();
@@ -170,6 +194,7 @@ function renderCards(list) {
   }
 }
 function updatePagination() {
+  renderSeenCount();
   const totalPages = Math.max(1, Math.ceil(state.total / PAGE_SIZE));
   el.pageIndicator.textContent = 'Page ' + (state.page + 1) + ' of ' + totalPages;
   el.prev.disabled = state.page <= 0 || state.mode === 'search';
@@ -288,6 +313,7 @@ function flattenEvolution(chainNode, out) {
   return out;
 }
 async function openDetail(id) {
+  markSeen(id);
   el.overlay.hidden = false;
   el.detailBody.innerHTML = '<p>Loading details…</p>';
   try {
@@ -385,5 +411,6 @@ window.addEventListener('online', updateOffline);
 window.addEventListener('offline', updateOffline);
 
 buildTypeChips();
+loadSeen();
 updateOffline();
 loadPage();
