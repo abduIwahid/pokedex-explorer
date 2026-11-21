@@ -5,7 +5,7 @@
 
 A fast, dependency-free Pokédex that browses, searches and filters all 1,300+ Pokémon with live data from PokéAPI — and demonstrates the engineering habits that separate a portfolio project from a tutorial follow-along: batching, caching, request cancellation and a real data-mapper layer.
 
-**Live demo:** _TBD — deploy pending owner decision (GitHub Pages or Vercel static)._
+**Live demo:** [abduiwahid.github.io/pokedex-explorer](https://abduiwahid.github.io/pokedex-explorer/)
 Run it locally: open `index.html` in a browser, or `python3 -m http.server` in this folder and visit `http://localhost:8000`.
 
 ## Features

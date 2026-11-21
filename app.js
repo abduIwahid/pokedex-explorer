@@ -183,10 +183,11 @@ function renderSeenCount() {
 function renderCards(list) {
   hideStates();
   el.grid.innerHTML = '';
-  for (const p of list) {
+  for (const [i, p] of list.entries()) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'card';
+    b.style.setProperty('--i', Math.min(i, 15));
     b.innerHTML = cardHtml(p);
     b.setAttribute('aria-label', 'View details for ' + p.name);
     b.addEventListener('click', () => openDetail(p.id));
@@ -319,8 +320,8 @@ async function openDetail(id) {
   try {
     const p = cacheGet(id) || (await fetchDetail(id));
     const maxStat = 160;
-    const statsHtml = p.stats.map((s) =>
-      '<div class="stat-row"><span class="stat-name">' + esc(s.name.replace('-', ' ')) + '</span>' +
+    const statsHtml = p.stats.map((s, si) =>
+      '<div class="stat-row" style="--si:' + si + '"><span class="stat-name">' + esc(s.name.replace('-', ' ')) + '</span>' +
       '<span class="stat-track"><span class="stat-fill" style="width:' + Math.min(100, Math.round(s.value / maxStat * 100)) + '%"></span></span>' +
       '<span>' + s.value + '</span></div>').join('');
     const abilities = p.abilities.map((a) => esc(a.name.replace(/-/g, ' ')) + (a.hidden ? ' (hidden)' : '')).join(', ');
@@ -353,7 +354,7 @@ async function loadEvolution(p) {
       try { members.push(await fetchDetail(name)); } catch (e) { /* skip missing */ }
     }
     region.innerHTML = '<div class="evo-row">' + members.map((m, i) =>
-      (i > 0 ? '<span class="evo-arrow" aria-hidden="true">→</span>' : '') +
+      (i > 0 ? '<span class="evo-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16"><path d="M4 12h15M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' : '') +
       '<button type="button" class="evo-item" data-evo-id="' + m.id + '" aria-label="View ' + esc(m.name) + '">' +
       '<img src="' + m.artwork + '" alt="' + esc(m.name) + '"><span>' + esc(m.name) + '</span></button>'
     ).join('') + '</div>';

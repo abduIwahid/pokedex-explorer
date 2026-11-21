@@ -8,3 +8,4 @@
 
 **Pending:** GitHub repo creation + deploy (owner decision: GitHub Pages vs Vercel); README demo GIF after deploy; Phase 2 level-ups (favourites, radar chart).
 - 2026-11-10 (later): Seen collection + first-person About shipped. Next: hosting choice (Pages vs Vercel) still open; favourites remain a Phase 2 candidate alongside the stat radar.
+- 2026-11-11: Frontend v2 shipped (warm ink + Poké-ball identity, motion pass, dark footer); [hidden] overlay bug fixed; Pages is ON (owner) and the README links the live demo.
